@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Food Hub Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Welcome to The Food Hub</h1>
+</header>
+<nav>
+  <a href="#" onclick="showPage('pizza')">Pizza</a>
+  <a href="#" onclick="showPage('pasta')">Pasta</a>
+  <a href="#" onclick="showPage('burger')">Burger</a>
+  <a href="#" onclick="showPage('salad')">Salad</a>
+  <a href="#" onclick="showPage('juice')">Juice</a>
+  <a href="#" onclick="showPage('book')">Book a Table</a>
+  <a href="cart.html">My Cart</a>
+</nav>
+
+<div class="content">
+
+  <div id="home" class="page">
+    <h2>Welcome</h2>
+    <p>Fresh, tasty and made with love. Choose any item from the menu above.</p>
+  </div>
+
+  <div id="pizza" class="page" style="display:none;">
+    <h2>Pizza</h2>
+    <img class="food" src="https://static.vecteezy.com/system/resources/thumbnails/047/734/497/small/enjoy-the-delicious-flavors-of-a-vegetarian-pizza-with-fresh-tomatoes-onions-and-green-peas-on-a-crispy-crust-from-a-nearby-pizzeria-add-basil-herbs-parsley-and-spices-for-an-extra-kick-photo.jpg" alt="Pizza">
+    <p>Our cheesy pizza is baked fresh in a stone oven with a crispy base and rich tomato sauce.
+    Topped with mozzarella, olives and fresh herbs. Perfect to share with friends and family.</p>
+    <p class="price">Price: Rs. 299</p>
+    <button onclick="addToCart('Pizza', 299)">Order Now</button>
+  </div>
+
+  <div id="pasta" class="page" style="display:none;">
+    <h2>Pasta</h2>
+    <img class="food" src="https://cdn77-s3.lazycatkitchen.com/wp-content/uploads/2021/10/roasted-tomato-sauce-portion-800x1200.jpg" alt="pasta">
+    <p>Creamy white sauce pasta cooked with garlic, mushrooms and a pinch of Italian spices.
+    Soft, smooth and full of flavour in every bite. A comfort food everyone loves.</p>
+    <p class="price">Price: Rs. 249</p>
+    <button onclick="addToCart('Pasta', 249)">Order Now</button>
+  </div>
+
+  <div id="burger" class="page" style="display:none;">
+    <h2>Burger</h2>
+    <img class="food" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYZhLBJofTDLNF6mum5hYQm0JJCKnSk_5KU8rB_2bzaczGazYqpz9cxW1-&s=10.jpg" alt="Burger">
+    <p>A juicy burger with a crispy patty, fresh lettuce, tomato and melted cheese in a soft toasted bun.
+    Served hot with our special house sauce.</p>
+    <p class="price">Price: Rs. 179</p>
+    <button onclick="addToCart('Burger', 179)">Order Now</button>
+  </div>
+
+  <div id="salad" class="page" style="display:none;">
+    <h2>Salad</h2>
+    <img class="food" src="https://nutritionrefined.com/wp-content/uploads/2023/08/homemade-garden-salad-featured.jpg" alt="Salad">
+    <p>A healthy mix of fresh greens, cucumber, cherry tomatoes and carrots with a light lemon dressing.
+    Light, refreshing and full of vitamins to keep you fit.</p>
+    <p class="price">Price: Rs. 149</p>
+    <button onclick="addToCart('Salad', 149)">Order Now</button>
+  </div>
+
+  <div id="juice" class="page" style="display:none;">
+    <h2>Juice</h2>
+    <img class="food" src="https://t4.ftcdn.net/jpg/01/87/21/31/360_F_187213110_p07ufUC42zVlcaijXRuFFYB4MKsWLgq1.jpg" alt="Juice">
+    <p>Freshly squeezed fruit juice made from seasonal fruits with no added sugar.
+    Cool, sweet and refreshing. The best partner for any meal.</p>
+    <p class="price">Price: Rs. 99</p>
+    <button onclick="addToCart('Juice', 99)">Order Now</button>
+  </div>
+
+  <div id="book" class="page" style="display:none;">
+    <h2>Book a Table</h2>
+    <div class="box">
+      <form id="bookForm">
+        <input type="text" id="bName" placeholder="Name">
+        <p id="bNameError" class="error"></p>
+        <input type="text" id="bRegName" placeholder="Registered Name">
+        <p id="bRegNameError" class="error"></p>
+        <input type="text" id="bPeople" placeholder="Number of People">
+        <p id="bPeopleError" class="error"></p>
+        <input type="date" id="bDate">
+        <p id="bDateError" class="error"></p>
+        <input type="time" id="bTime">
+        <p id="bTimeError" class="error"></p>
+        <button type="submit">Reserve</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>2026 The Food Hub</p>
+</footer>
+
+<script>
+function showPage(id) {
+  let pages = document.getElementsByClassName("page");
+  for (let i = 0; i < pages.length; i++) {
+    pages[i].style.display = "none";
+  }
+  document.getElementById(id).style.display = "block";
+}
+
+function sendToServer(path, data) {
+  fetch("http://localhost:3001/" + path, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  }).catch(function (err) {
+    console.log("Server not running");
+  });
+}
+
+function addToCart(name, price) {
+  let items = localStorage.getItem("cartItems");
+  let total = localStorage.getItem("cartTotal");
+  if (items === null) {
+    items = "";
+    total = 0;
+  }
+  items = items + name + " - Rs. " + price + "\n";
+  total = Number(total) + price;
+  localStorage.setItem("cartItems", items);
+  localStorage.setItem("cartTotal", total);
+
+  alert("Added to cart");
+  sendToServer("order", { item: name, price: price });
+  window.location.href = "cart.html";
+}
+
+document.getElementById("bookForm").addEventListener("submit", function (event) {
+  event.preventDefault();
+  let name = document.getElementById("bName").value.trim();
+  let regName = document.getElementById("bRegName").value.trim();
+  let people = document.getElementById("bPeople").value.trim();
+  let date = document.getElementById("bDate").value.trim();
+  let time = document.getElementById("bTime").value.trim();
+
+  document.getElementById("bNameError").textContent = "";
+  document.getElementById("bRegNameError").textContent = "";
+  document.getElementById("bPeopleError").textContent = "";
+  document.getElementById("bDateError").textContent = "";
+  document.getElementById("bTimeError").textContent = "";
+
+  let isValid = true;
+  if (name === "") {
+    document.getElementById("bNameError").textContent = "Name cannot be empty.";
+    isValid = false;
+  }
+  if (regName === "") {
+    document.getElementById("bRegNameError").textContent = "Registered name cannot be empty.";
+    isValid = false;
+  }
+  if (people === "" || people < 1) {
+    document.getElementById("bPeopleError").textContent = "Enter number of people.";
+    isValid = false;
+  }
+  if (date === "") {
+    document.getElementById("bDateError").textContent = "Date cannot be empty.";
+    isValid = false;
+  }
+  if (time === "") {
+    document.getElementById("bTimeError").textContent = "Time cannot be empty.";
+    isValid = false;
+  }
+  if (isValid) {
+    alert("Reservation Submitted Successfully");
+    sendToServer("reservation", {
+      name: name, registeredName: regName, people: people, date: date, time: time
+    });
+  }
+});
+</script>
+</body>
+</html>

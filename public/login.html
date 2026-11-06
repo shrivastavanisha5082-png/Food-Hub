@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Food Hub Login</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>The Food Hub</h1>
+</header>
+<div class="box">
+  <h2>Login / Create Account</h2>
+  <form id="loginForm">
+    <input type="text" id="email" placeholder="Email">
+    <p id="emailError" class="error"></p>
+    <input type="password" id="password" placeholder="Password">
+    <p id="passwordError" class="error"></p>
+    <button type="button" id="loginBtn">Login</button>
+    <button type="button" id="createBtn">Create</button>
+  </form>
+</div>
+<footer>
+  <p>2026 The Food Hub</p>
+</footer>
+
+<script>
+function sendToServer(path, data) {
+  fetch("http://localhost:3001/" + path, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  }).catch(function (err) {
+    console.log("Server not running");
+  });
+}
+
+function checkLogin() {
+  let email = document.getElementById("email").value.trim();
+  let password = document.getElementById("password").value.trim();
+  document.getElementById("emailError").textContent = "";
+  document.getElementById("passwordError").textContent = "";
+  let isValid = true;
+
+  if (email === "") {
+    document.getElementById("emailError").textContent = "Email cannot be empty.";
+    isValid = false;
+  } else if (!email.includes("@")) {
+    document.getElementById("emailError").textContent = "Invalid email format.";
+    isValid = false;
+  }
+  if (password === "") {
+    document.getElementById("passwordError").textContent = "Password cannot be empty.";
+    isValid = false;
+  }
+  return isValid;
+}
+
+document.getElementById("loginBtn").addEventListener("click", function () {
+  if (checkLogin()) {
+    alert("Login Successfully");
+    sendToServer("login", { email: document.getElementById("email").value.trim() });
+    window.location.href = "dashboard.html";
+  }
+});
+
+document.getElementById("createBtn").addEventListener("click", function () {
+  if (checkLogin()) {
+    alert("Created Successfully");
+    sendToServer("signup", {
+      email: document.getElementById("email").value.trim(),
+      password: document.getElementById("password").value.trim()
+    });
+    window.location.href = "dashboard.html";
+  }
+});
+</script>
+</body>
+</html>

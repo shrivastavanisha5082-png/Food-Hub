@@ -1,0 +1,92 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #fff5ee;
+}
+header {
+  background-color: #1e3557;
+  color: white;
+  text-align: center;
+  padding: 25px;
+}
+nav {
+  background-color: #162a45;
+  text-align: center;
+  padding: 12px;
+}
+nav a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 16px;
+  margin: 3px;
+  display: inline-block;
+}
+nav a:hover {
+  background-color: #4f6f9f;
+  border-radius: 5px;
+}
+.content {
+  padding: 30px;
+  min-height: 300px;
+  text-align: center;
+}
+.content h2 {
+  color: #1e3557;
+}
+.content p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+.box {
+  background-color: white;
+  width: 400px;
+  margin: 30px auto;
+  padding: 30px;
+  border-radius: 20px;
+}
+.photo {
+  background-color: #12368f;
+  font-size: 90px;
+  width: 200px;
+  height: 160px;
+  margin: auto;
+  padding: 10px;
+  border-radius: 20px;
+}
+.price {
+  color: #d95670;
+  font-size: 22px;
+  font-weight: bold;
+}
+input {
+  width: 90%;
+  padding: 10px;
+  margin: 6px;
+  border: 1px solid gray;
+  border-radius: 8px;
+}
+button {
+  background-color: #d95670;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 20px;
+  margin: 8px;
+}
+button:hover {
+  background-color: #b8405a;
+}
+.error {
+  color: red;
+  margin: 0;
+}
+#cartList {
+  white-space: pre-line;
+  font-size: 18px;
+}
+footer {
+  background-color: #1e3557;
+  color: white;
+  text-align: center;
+  padding: 15px;
+}

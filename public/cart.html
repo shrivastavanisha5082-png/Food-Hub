@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>My Cart</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>My Cart</h1>
+</header>
+<nav>
+  <a href="dashboard.html">Back to Menu</a>
+  <a href="login.html">Logout</a>
+</nav>
+<div class="content">
+  <h2>Your Orders</h2>
+  <p id="cartList">Your cart is empty.</p>
+  <p class="price" id="cartTotal"></p>
+  <button onclick="clearCart()">Clear Cart</button>
+</div>
+<footer>
+  <p>2026 The Food Hub</p>
+</footer>
+
+<script>
+let items = localStorage.getItem("cartItems");
+let total = localStorage.getItem("cartTotal");
+if (items !== null && items !== "") {
+  document.getElementById("cartList").textContent = items;
+  document.getElementById("cartTotal").textContent = "Total: Rs. " + total;
+}
+
+function clearCart() {
+  localStorage.removeItem("cartItems");
+  localStorage.removeItem("cartTotal");
+  document.getElementById("cartList").textContent = "Your cart is empty.";
+  document.getElementById("cartTotal").textContent = "";
+}
+</script>
+</body>
+</html>
