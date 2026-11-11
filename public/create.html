@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Food Hub Create Account</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f5e6d3;
+            margin: 0;
+        }
+
+        header {
+            background-color: #262baa;
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+
+        .box {
+            width: 320px;
+            margin: 50px auto;
+            padding: 25px;
+            background: white;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        h2 {
+            color: #2735b0;
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid gray;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background-color: #2a42ae;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #311da5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>The Food Hub</h1>
+    </header>
+
+    <div class="box">
+
+        <h2>Create Account</h2>
+
+        <form id="createForm">
+
+            <input type="text"
+                id="name"
+                placeholder="Enter Your Name"
+                required>
+
+            <input type="email"
+                id="email"
+                placeholder="Enter Your Email"
+                required>
+
+            <input type="password"
+                id="password"
+                placeholder="Enter Your Password"
+                required>
+
+            <button type="submit">
+                Create Account
+            </button>
+
+        </form>
+
+        <p>Already have an account?</p>
+
+        <button type="button"
+            onclick="window.location.href='login.html'">
+            Back to Login
+        </button>
+
+    </div>
+
+    <script>
+
+        document.getElementById("createForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value;
+
+            
+
+            let namePattern = /^[A-Za-z]+(?:[ ]+[A-Za-z]+)*$/;
+
+            if (!namePattern.test(name)) {
+                alert("Wrong Name! Numbers and special characters are not allowed.");
+                return;
+            }
+
+            
+
+            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailPattern.test(email)) {
+                alert("Improper Email! Please enter a valid email.");
+                return;
+            }
+
+            
+
+            if (password.length < 6 || password.trim() !== password) {
+                alert("Wrong Password! Enter at least 6 characters without spaces at the beginning or end.");
+                return;
+            }
+
+            
+
+            let savedEmail = localStorage.getItem("userEmail");
+
+            if (email === savedEmail) {
+                alert("This email is already registered. Please login.");
+                return;
+            }
+
+    
+
+            localStorage.setItem("userName", name);
+            localStorage.setItem("userEmail", email);
+            localStorage.setItem("userPassword", password);
+
+            alert("Account Created Successfully!");
+
+            window.location.href = "dashboard.html";
+
+        });
+
+    </script>
+
+</body>
+</html>
